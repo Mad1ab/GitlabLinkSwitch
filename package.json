@@ -1,0 +1,28 @@
+{
+  "name": "link-switch-vue",
+  "displayName": "Link switch vue",
+  "version": "0.0.1",
+  "description": "plugin link switch",
+  "author": "Madlab",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build",
+    "package": "plasmo package"
+  },
+  "dependencies": {
+    "plasmo": "0.83.0",
+    "vue": "3.3.4"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.1.0",
+    "@types/chrome": "0.0.245",
+    "@types/node": "20.5.9",
+    "prettier": "3.0.3",
+    "typescript": "5.2.2"
+  },
+  "manifest": {
+    "host_permissions": [
+      "https://*/*"
+    ]
+  }
+}
