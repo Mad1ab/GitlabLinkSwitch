@@ -4,9 +4,9 @@
   "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.vue"],
   "compilerOptions": {
     "paths": {
-      "~*": ["./src/*"]
+      "~*": ["./src/*"],
     },
-    "types": ["vue"],
+    "types": ["vue", "chrome"],
     "baseUrl": "."
   }
 }

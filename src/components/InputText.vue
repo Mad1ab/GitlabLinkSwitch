@@ -1,6 +1,7 @@
 <template>
   <div class="relative h-11 w-full min-w-[200px] mt-2 mb-2">
     <input
+        @input="updateValue"
         :placeholder="placeholder"
         class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-blue-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
     />
@@ -11,5 +12,11 @@
 </template>
 
 <script setup lang="ts">
-  defineProps(['label', 'placeholder']);
+  defineProps(['label', 'placeholder', 'modelValue']);
+  const emit = defineEmits(['update:modelValue']);
+
+  function updateValue(event: InputEvent) {
+    const el = event.target as HTMLInputElement;
+    emit('update:modelValue', el.value);
+  }
 </script>
