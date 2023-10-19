@@ -56,7 +56,7 @@ watch(checkSite, async (newCheck) => {
 });
 
 async function getSiteObject() {
-  let sitesObject = await chrome.storage.local.get(`site_${activeTab.value.id}`);
+  let sitesObject = await chrome.storage.local.get(`site_${activeTab.value.hostname}`);
   return sitesObject[`site_${activeTab.value.hostname}`] ? JSON.parse(sitesObject[`site_${activeTab.value.hostname}`]) : {enable: true, items: []};
 }
 
