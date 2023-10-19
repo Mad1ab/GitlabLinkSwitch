@@ -41,14 +41,16 @@ const activeSiteObject: Ref<ISiteObject> = ref({});
 
 chrome.tabs.query({ active: true, currentWindow: true}).then(tabs => {
   activeTab.value = tabs.pop();
+  let url = new URL(activeTab.value.url);
+  activeTab.value.hostname = url.hostname;
   getSiteObject().then(siteObject => {
     activeSiteObject.value = siteObject;
   });
 });
 
 async function getSiteObject() {
-  let sitesObject = await chrome.storage.local.get(`site_${activeTab.value.id}`);
-  return sitesObject[`site_${activeTab.value.id}`] ? JSON.parse(sitesObject[`site_${activeTab.value.id}`]) : {enable: true, items: []};
+  let sitesObject = await chrome.storage.local.get(`site_${activeTab.value.hostname}`);
+  return sitesObject[`site_${activeTab.value.hostname}`] ? JSON.parse(sitesObject[`site_${activeTab.value.hostname}`]) : {enable: true, items: []};
 }
 
 async function deleteItem(item: IItemStorage) {
@@ -57,7 +59,7 @@ async function deleteItem(item: IItemStorage) {
   });
 
   let setObject = {};
-  setObject[`site_${activeTab.value.id}`] = JSON.stringify(activeSiteObject.value);
+  setObject[`site_${activeTab.value.hostname}`] = JSON.stringify(activeSiteObject.value);
   await chrome.storage.local.set(setObject);
 }
 

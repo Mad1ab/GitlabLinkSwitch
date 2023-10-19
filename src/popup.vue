@@ -38,11 +38,10 @@ const replaceLink = ref('');
 const activeTab: Ref<chrome.tabs.Tab|null> = ref(null);
 const activeSiteObject = ref({});
 
-chrome.
-
 chrome.tabs.query({ active: true, currentWindow: true}).then(tabs => {
   activeTab.value = tabs.pop();
-  console.log(activeTab.value);
+  let url = new URL(activeTab.value.url);
+  activeTab.value.hostname = url.hostname;
   getSiteObject().then(siteObject => {
     activeSiteObject.value = siteObject;
     checkSite.value = siteObject.enable;
@@ -52,13 +51,13 @@ chrome.tabs.query({ active: true, currentWindow: true}).then(tabs => {
 watch(checkSite, async (newCheck) => {
   activeSiteObject.value.enable = newCheck;
   let setObject = {};
-  setObject[`site_${activeTab.value.id}`] = JSON.stringify(activeSiteObject.value);
+  setObject[`site_${activeTab.value.hostname}`] = JSON.stringify(activeSiteObject.value);
   await chrome.storage.local.set(setObject);
 });
 
 async function getSiteObject() {
   let sitesObject = await chrome.storage.local.get(`site_${activeTab.value.id}`);
-  return sitesObject[`site_${activeTab.value.id}`] ? JSON.parse(sitesObject[`site_${activeTab.value.id}`]) : {enable: true, items: []};
+  return sitesObject[`site_${activeTab.value.hostname}`] ? JSON.parse(sitesObject[`site_${activeTab.value.hostname}`]) : {enable: true, items: []};
 }
 
 function validate() {
@@ -96,7 +95,7 @@ async function addLink() {
   siteObject.items = siteItems;
 
   let setObject = {};
-  setObject[`site_${activeTab.value.id}`] = JSON.stringify(siteObject);
+  setObject[`site_${activeTab.value.hostname}`] = JSON.stringify(siteObject);
 
   await chrome.storage.local.set(setObject);
 }

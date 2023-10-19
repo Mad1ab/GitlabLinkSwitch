@@ -1,8 +1,8 @@
 {
   "name": "link-switch-vue",
-  "displayName": "Link switch vue",
-  "version": "0.0.1",
-  "description": "plugin link switch",
+  "displayName": "Link switch",
+  "version": "1.0.0",
+  "description": "plugin link switch on site",
   "author": "Madlab",
   "scripts": {
     "dev": "plasmo dev",
